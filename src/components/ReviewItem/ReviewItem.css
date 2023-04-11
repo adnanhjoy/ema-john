@@ -1,0 +1,39 @@
+.review-item{
+    display: flex;
+    align-items: center;
+    border: 1px solid #cacaca;
+    width: 571px;
+    border-radius: 10px;
+    margin: 21px auto;
+    padding: 8px;
+}
+.review img{
+    height: 91px;
+    width: 91px;
+    border-radius: 6px;
+}
+.review-details{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-left: 15px;
+}
+.review-details h5,p{
+    margin: 0;
+}
+.delete-btn{
+    height: 55px;
+    width: 55px;
+    border: none;
+    border-radius: 50%;
+    background-color: #e99595;
+    cursor: pointer;
+}
+.delete-btn:hover{
+    background-color: #af6868;
+}
+.delete-icon{
+    font-size: 30px;
+    color: #f53636;
+}
