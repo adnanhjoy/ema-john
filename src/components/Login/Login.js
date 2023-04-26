@@ -4,7 +4,7 @@ import './Login.css';
 import { AuthContext } from '../../Context/UserContext';
 
 const Login = () => {
-    const { loginUser } = useContext(AuthContext)
+    const { loginUser, signInGoogle } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
@@ -19,8 +19,17 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 form.reset();
-                navigate(from, {replace: true})
+                navigate(from, { replace: true })
 
+            })
+            .catch(error => console.error(error))
+    }
+
+    const signInWithGoogle = () => {
+        signInGoogle()
+            .then(result => {
+                const user = result.user;
+                navigate(from, {replace: true})
             })
             .catch(error => console.error(error))
     }
@@ -44,7 +53,7 @@ const Login = () => {
                     <p className='form-group'>You don't have an account ? <Link to='/signup' className='link-btn'>Signup</Link></p>
                 </form>
                 <div className='form-group'>
-                    <button className='google-btn'>Google</button>
+                    <button onClick={signInWithGoogle} className='google-btn'>Google</button>
                 </div>
             </div>
         </div>
