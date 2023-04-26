@@ -25,7 +25,7 @@ function App() {
           element: <Order></Order>
         },
         {
-          path: '/inventory', element: <Inventory></Inventory>
+          path: '/inventory', element: <PrivateRoute><Inventory></Inventory></PrivateRoute>
         },
         {
           path: 'shipping',
