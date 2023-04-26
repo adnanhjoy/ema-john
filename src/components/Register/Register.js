@@ -1,13 +1,41 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Register.css';
+import { AuthContext } from '../../Context/UserContext';
 
 const Register = () => {
+    const [error, setError] = useState('');
+    const { createUser } = useContext(AuthContext)
+
+    const signupUser = event => {
+        event.preventDefault()
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        const confirm = form.confirm.value;
+
+        if(password.length < 6){
+            setError('Password must be used 6 characters');
+            return;
+        }
+        if(password !== confirm){
+            setError('Confirm password did not match');
+            return;
+        }
+
+        createUser(email, password)
+            .then(result => {
+                const user = result.user;
+                form.reset()
+            })
+            .catch(error => console.error(error))
+    }
+
     return (
         <div>
             <div className='form-container'>
                 <h1 className='form-title'>Signup</h1>
-                <form className='form-body'>
+                <form onSubmit={signupUser} className='form-body'>
                     <div className='form-group'>
                         <label htmlFor="email">Email</label> <br />
                         <input type="email" placeholder='email' name='email' />
@@ -20,7 +48,7 @@ const Register = () => {
                         <label htmlFor="confirm">Confirm Password</label> <br />
                         <input type="password" placeholder='confirm' name='confirm' />
                     </div>
-                    {/* <p className='form-group error-message'>{error}</p> */}
+                    <p className='form-group error-message'>{error}</p>
                     <div className='form-group'>
                         <button className='login-btn'>Signup</button>
                     </div>
@@ -31,6 +59,4 @@ const Register = () => {
     );
 };
 
-export default Register;
-
-// onSubmit={signupUser} 
+export default Register; 
