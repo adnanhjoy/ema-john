@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Login.css';
+import { AuthContext } from '../../Context/UserContext';
 
 const Login = () => {
+    const { loginUser } = useContext(AuthContext)
+
+    const signIn = event => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        loginUser(email, password)
+            .then(result => {
+                const user = result.user;
+                form.reset();
+            })
+            .catch(error => console.error(error))
+    }
+
     return (
         <div>
             <div className='form-container'>
                 <h1 className='form-title'>Login</h1>
-                <form  className='form-body'>
+                <form onSubmit={signIn} className='form-body'>
                     <div className='form-group'>
                         <label htmlFor="email">Email</label> <br />
                         <input type="email" placeholder='email' name='email' required />
@@ -30,5 +47,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// onSubmit={loginUser}
